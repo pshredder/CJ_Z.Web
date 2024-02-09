@@ -1,0 +1,222 @@
+<!--WebDevSimplified-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="VStyles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        .menu-icons img:not(.menu-channel-icon) {
+            filter: invert(1);
+        }
+        
+        
+    
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../index.html">
+            <img src="../images/Logo/Zep_2.2.png" alt="CJZ Logo"class="CJZ-logo" />
+            </a>
+            <form class="search-bar">
+                <input class="search-input" type="search"placeholder="Search" aria-label="Search" />
+                <button type="submit" class="search-btn"> 
+                    <img src="../icon/magnify.svg" style="width: 36px; height: 36px;" />
+                </button>
+                       </form>
+        <div class="menu-icons">
+        <a href="#">
+            <img src="../icon/video-plus.svg" alt="Upload Video" style="width: 36px; height: 36px;" />
+        </a>
+        <a href="#">
+            <img src="../icon/apps.svg" alt="Apps" style="width: 36px; height: 36px;" />
+        </a>
+        <a href="#">
+            <img src="../icon/bell.svg" alt="Notifications" style="width: 36px; height: 36px;" />
+        </a>
+        <a href="#">
+            <img class="menu-channel-icon" src="../images/YC.png" alt="Your Channel" style="width: 36px; height: 36px;" />
+        </a>
+    </div>
+                </header>
+    <div class="categories">
+    <section class="category-section">
+        <button class="category active">All</button>
+        <button class="category">Category 1</button>
+        <button class="category">Category 2</button>
+        <button class="category">Category 3</button>
+        <button class="category">Category 4</button>
+        <button class="category">Category 5</button>
+        <button class="category">Category 6</button>
+        <button class="category">Category 7</button>
+        <button class="category">Category 8</button>
+        <button class="category">Category 9</button>
+        <button class="category">Category 10</button>
+</section>
+    
+    </div>
+    <div class="videos">
+        <section class="video-section">
+            <h2 class="video-section-title">
+                Project Section
+                <button class="video-section-title-close">&times;</button> 
+            </h2>
+
+            <!-- Inserted video container with thumbnail -->
+<article class="video-container">
+    <a href="HelloW.html" class="thumbnail" data-duration="">
+        <img src="" alt="Thumbnail Image" onerror="this.style.display='none';">
+        <!-- Add your image source here -->
+        <video id="myVideo" style="width: 100%; height: auto;">
+            <source src="../Videos/hello_world.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </a>
+    <div class="video-bottom-section">
+        <a href="#">
+            <img class="channel-icon" src="../images/YC.png" />
+        </a>
+        <div class="video-details">
+            <a href="#" class="video-title">Video Title</a>
+            <a href="#" class="video-channel-name">Clef_J_Hyr</a>
+            <div class="video-metadata">
+                <span id="viewCount">0 views</span>
+                •
+                <span id="uploadDate" data-upload-date="2024-01-08">Uploaded on: Loading...</span>
+                <!-- Set data-upload-date attribute with the upload date -->
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+            
+            
+        </section>
+</div>
+    
+    <!--autopla on mouse-->
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var videoContainer = document.querySelector('.video-container');
+            var video = document.getElementById('myVideo');
+
+            videoContainer.addEventListener('mouseenter', function () {
+                videoContainer.style.borderRadius = '0'; // Unround the corners
+                video.play();
+            });
+
+            videoContainer.addEventListener('mouseleave', function () {
+                videoContainer.style.borderRadius = '10px'; // Round the corners
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
+    </script>
+    <!--Vid duration-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var video = document.getElementById('myVideo');
+        video.addEventListener('loadedmetadata', function() {
+            var duration = video.duration;
+            var thumbnail = document.querySelector('.thumbnail');
+            thumbnail.dataset.duration = formatDuration(duration);
+        });
+        
+        function formatDuration(duration) {
+            var totalSeconds = Math.abs(Math.floor(duration));
+            var minutes = Math.floor(totalSeconds / 60);
+            var seconds = totalSeconds % 60;
+            return (duration < 0 ? '-' : '') + 
+                   ('0' + minutes).slice(-2) + ':' + 
+                   ('0' + seconds).slice(-2);
+        }
+    });
+</script>
+<!--whenT up-->
+
+<script>
+    function isLeapYear(year) {
+        if (year % 4 === 0) {
+            if (year % 100 === 0) {
+                if (year % 400 === 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    function daysInMonth(year, month) {
+        if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+            return 31;
+        } else if ([4, 6, 9, 11].includes(month)) {
+            return 30;
+        } else if (month === 2) {
+            return isLeapYear(year) ? 29 : 28;
+        }
+    }
+
+    function timeElapsed(uploadDate) {
+        var currentDate = new Date();
+        var delta = Math.floor((currentDate - uploadDate) / (1000 * 60 * 60 * 24)); // difference in days
+
+        var years = Math.floor(delta / 365);
+        var months = Math.floor((delta % 365) / 30);
+        var days = delta % 365 % 30;
+
+        if (years > 0) {
+            return years + " year" + (years > 1 ? "s" : "") + " ago";
+        } else if (months > 0) {
+            return months + " month" + (months > 1 ? "s" : "") + " ago";
+        } else {
+            return days + " day" + (days > 1 ? "s" : "") + " ago";
+        }
+    }
+
+    // Extracting the upload date from the HTML element
+    var uploadDateString = document.getElementById("uploadDate").getAttribute("data-upload-date");
+    var uploadDate = new Date(uploadDateString);
+
+    // Example usage
+    document.getElementById("uploadDate").textContent = "Uploaded on: " + timeElapsed(uploadDate);
+</script>
+
+    
+    <!--Vid Counter-->
+
+<script>
+        // Get the view count from localStorage or default to 0
+        let viewCount = localStorage.getItem('viewCount') || 0;
+
+        // Update the view count display
+        document.getElementById('viewCount').textContent = viewCount + ' views';
+
+        // Function to increment view count and update display
+        function incrementViewCount() {
+            viewCount++;
+            localStorage.setItem('viewCount', viewCount);
+            document.getElementById('viewCount').textContent = viewCount + ' views';
+        }
+
+        // Attach an event listener to the video element to increment view count when the video starts playing
+        document.getElementById('myVideo').addEventListener('play', incrementViewCount);
+    </script>
+    
+    
+    
+</body>
+</html>
