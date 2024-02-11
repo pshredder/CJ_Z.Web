@@ -199,22 +199,49 @@
     <!--Vid Counter-->
 
 <script>
-        // Get the view count from localStorage or default to 0
-        let viewCount = localStorage.getItem('viewCount') || 0;
-
-        // Update the view count display
-        document.getElementById('viewCount').textContent = viewCount + ' views';
-
-        // Function to increment view count and update display
-        function incrementViewCount() {
-            viewCount++;
-            localStorage.setItem('viewCount', viewCount);
-            document.getElementById('viewCount').textContent = viewCount + ' views';
+    // Function to get the value of a cookie
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            while (cookie.charAt(0) == ' ') {
+                cookie = cookie.substring(1, cookie.length);
+            }
+            if (cookie.indexOf(nameEQ) == 0) {
+                return cookie.substring(nameEQ.length, cookie.length);
+            }
         }
+        return null;
+    }
 
-        // Attach an event listener to the video element to increment view count when the video starts playing
-        document.getElementById('myVideo').addEventListener('play', incrementViewCount);
-    </script>
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    // Get the view count from cookie or default to 0
+    let viewCount = parseInt(getCookie('viewCount')) || 0;
+
+    // Update the view count display
+    document.getElementById('viewCount').textContent = viewCount + ' views';
+
+    // Function to increment view count and update display
+    function incrementViewCount() {
+        viewCount++;
+        setCookie('viewCount', viewCount, 365); // Set cookie to expire in 365 days
+        document.getElementById('viewCount').textContent = viewCount + ' views';
+    }
+
+    // Attach an event listener to the video element to increment view count when the video starts playing
+    document.getElementById('myVideo').addEventListener('play', incrementViewCount);
+</script>
     
     
     
